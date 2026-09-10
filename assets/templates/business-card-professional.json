@@ -1,0 +1,21 @@
+{
+  "id": "template-005",
+  "name": "Professional Business Card",
+  "type": "business-card",
+  "description": "A professional business card template",
+  "defaultValues": {
+    "headline": "Your Name",
+    "subheadline": "Job Title",
+    "bodyText": "Email: contact@company.com\nPhone: (555) 123-4567\nWebsite: www.company.com",
+    "ctaButton": "Connect",
+    "primaryColor": "#2c3e50",
+    "secondaryColor": "#e67e22",
+    "textColor": "#ffffff"
+  },
+  "dimensions": {
+    "width": 3.5,
+    "height": 2,
+    "aspectRatio": "3.5:2"
+  },
+  "createdAt": "2026-09-10"
+}
