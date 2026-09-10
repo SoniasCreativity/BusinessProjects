@@ -1,0 +1,21 @@
+{
+  "id": "template-001",
+  "name": "Modern Gradient",
+  "type": "social-media",
+  "description": "A modern social media template with gradient background",
+  "defaultValues": {
+    "headline": "Your Headline Here",
+    "subheadline": "Add a compelling message",
+    "bodyText": "Describe your product or service here. Make it compelling and clear.",
+    "ctaButton": "Learn More",
+    "primaryColor": "#0066cc",
+    "secondaryColor": "#ff6600",
+    "textColor": "#ffffff"
+  },
+  "dimensions": {
+    "width": 1080,
+    "height": 1080,
+    "aspectRatio": "1:1"
+  },
+  "createdAt": "2026-09-10"
+}
