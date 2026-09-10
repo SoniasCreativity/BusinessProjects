@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Material Mock-Up Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Marketing Material Mock-Up Generator</h1>
+            <p>Create professional marketing materials in seconds</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Control Panel -->
+            <aside class="control-panel">
+                <h2>Customization</h2>
+
+                <!-- Template Selection -->
+                <div class="form-group">
+                    <label for="template">Select Template:</label>
+                    <select id="template">
+                        <option value="social-media">Social Media Post</option>
+                        <option value="email-header">Email Header</option>
+                        <option value="banner">Web Banner</option>
+                        <option value="flyer">Flyer</option>
+                        <option value="business-card">Business Card</option>
+                    </select>
+                </div>
+
+                <!-- Text Customization -->
+                <div class="form-group">
+                    <label for="headline">Headline:</label>
+                    <input type="text" id="headline" placeholder="Enter your headline" value="Your Headline Here">
+                </div>
+
+                <div class="form-group">
+                    <label for="subheadline">Subheadline:</label>
+                    <input type="text" id="subheadline" placeholder="Enter your subheadline" value="Add a compelling message">
+                </div>
+
+                <div class="form-group">
+                    <label for="body-text">Body Text:</label>
+                    <textarea id="body-text" placeholder="Enter body text" rows="4">Describe your product or service here. Make it compelling and clear.</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="cta-button">CTA Button Text:</label>
+                    <input type="text" id="cta-button" placeholder="e.g., Learn More" value="Learn More">
+                </div>
+
+                <!-- Color Customization -->
+                <div class="form-group">
+                    <label for="primary-color">Primary Color:</label>
+                    <input type="color" id="primary-color" value="#0066cc">
+                </div>
+
+                <div class="form-group">
+                    <label for="secondary-color">Secondary Color:</label>
+                    <input type="color" id="secondary-color" value="#ff6600">
+                </div>
+
+                <div class="form-group">
+                    <label for="text-color">Text Color:</label>
+                    <input type="color" id="text-color" value="#333333">
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button id="preview-btn" class="btn btn-primary">Preview</button>
+                    <button id="download-btn" class="btn btn-success">Download Mockup</button>
+                    <button id="reset-btn" class="btn btn-secondary">Reset</button>
+                </div>
+            </aside>
+
+            <!-- Preview Area -->
+            <main class="preview-area">
+                <div id="mockup" class="mockup-container">
+                    <!-- Mockup content will be generated here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
