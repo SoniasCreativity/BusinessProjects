@@ -1,56 +1,63 @@
-# Marketing Material Mock-Up Generator
+# Product Image Layout Composer
 
-A web-based application for creating, customizing, and generating marketing material mock-ups. This tool allows users to design professional marketing materials with ease.
+A professional web application for composing product images into pre-determined layouts designed for marketing and social media. Perfect for music (Vinyl LP, Vinyl EP, CD), cassette tapes, and books.
 
 ## Features
 
-- **Template Selection**: Choose from various pre-designed marketing templates
-- **Text Customization**: Edit headlines, body text, and call-to-action buttons
-- **Color Customization**: Adjust colors to match your brand
-- **Live Preview**: See changes in real-time
-- **Download Mockups**: Export your designs as images
-- **Responsive Design**: Works on desktop and mobile devices
+- **5 Professional Layouts:**
+  1. **Vinyl Records LP** - Top center main image, bottom left/right side images with 20% overlap
+  2. **Vinyl Records EP** - Bottom center main, top center background image
+  3. **CD** - Top left/right pair with bottom center overlay (20% overlap)
+  4. **Cassette Tape** - Center left/right images with ribbon detail
+  5. **Books** - Top left front, bottom right back with layering
 
-## Project Structure
+- **Advanced Image Controls:**
+  - Upload multiple images
+  - Automatic background removal
+  - Image rotation adjustment
+  - Spacing control
+  - Real-time preview
 
-```
-BusinessProjects/
-├── README.md                 # Project documentation
-├── index.html               # Main application interface
-├── styles.css               # Application styling
-├── script.js                # JavaScript logic
-├── assets/
-│   └── templates/           # Template designs
-└── .gitignore              # Git ignore file
-```
+- **Professional Export:**
+  - JPG format output
+  - White background canvas
+  - High-quality composition
 
-## Getting Started
+## How to Use
 
-1. Open `index.html` in your web browser
-2. Select a template from the available options
-3. Customize the text and colors
-4. Preview your mock-up in real-time
-5. Download your finished design
+1. Select a layout (1-5 buttons)
+2. Upload your product images
+3. Adjust rotation and spacing as needed
+4. Download the final JPG image
 
-## Technologies Used
+## Layout Requirements
 
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
-- HTML2Canvas (for downloading mockups)
+- **Vinyl LP/EP/CD/Cassette/Books**: Upload images with "front", "back", or generic naming
+- Images are automatically positioned based on filename
+- All images remain flat (no rotation applied automatically)
+- Background is removed during processing
 
-## Future Enhancements
+## Technology
 
-- Add more template options
-- Implement image upload functionality
-- Add font customization
-- Cloud storage for saved designs
-- User accounts and project management
+- HTML5 for structure
+- CSS3 for styling (black background, colored buttons)
+- JavaScript for image processing and layout composition
+- Canvas API for image rendering
+- File upload API for image handling
+
+## Installation
+
+1. Clone the repository
+2. Open `index.html` in a modern web browser
+3. Start composing!
+
+## Browser Support
+
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
 
 ## License
 
-MIT License
-
-## Author
-
-SoniasCreativity
+MIT License - Feel free to use for personal or commercial projects.
