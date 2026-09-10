@@ -1,0 +1,21 @@
+{
+  "id": "template-003",
+  "name": "Bold Web Banner",
+  "type": "banner",
+  "description": "A bold web banner template for landing pages",
+  "defaultValues": {
+    "headline": "Limited Time Offer",
+    "subheadline": "Save 50% on all products this week",
+    "bodyText": "Don't miss out on our biggest sale of the year. Shop now and get exclusive deals!",
+    "ctaButton": "Shop Now",
+    "primaryColor": "#e74c3c",
+    "secondaryColor": "#c0392b",
+    "textColor": "#ffffff"
+  },
+  "dimensions": {
+    "width": 1200,
+    "height": 400,
+    "aspectRatio": "3:1"
+  },
+  "createdAt": "2026-09-10"
+}
