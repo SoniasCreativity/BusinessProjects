@@ -3,84 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing Material Mock-Up Generator</title>
+    <title>Product Image Layout Composer</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Marketing Material Mock-Up Generator</h1>
-            <p>Create professional marketing materials in seconds</p>
+            <h1>Product Image Layout Composer</h1>
+            <p>Create professional product layouts for marketing and social media</p>
         </header>
 
         <div class="main-content">
             <!-- Control Panel -->
-            <aside class="control-panel">
-                <h2>Customization</h2>
-
-                <!-- Template Selection -->
-                <div class="form-group">
-                    <label for="template">Select Template:</label>
-                    <select id="template">
-                        <option value="social-media">Social Media Post</option>
-                        <option value="email-header">Email Header</option>
-                        <option value="banner">Web Banner</option>
-                        <option value="flyer">Flyer</option>
-                        <option value="business-card">Business Card</option>
-                    </select>
+            <div class="control-panel">
+                <h2>Layout Selection</h2>
+                
+                <div class="layout-buttons">
+                    <button class="layout-btn" data-layout="vinyl-lp">
+                        <span class="btn-number">1</span>
+                        <span class="btn-text">Vinyl LP</span>
+                    </button>
+                    <button class="layout-btn" data-layout="vinyl-ep">
+                        <span class="btn-number">2</span>
+                        <span class="btn-text">Vinyl EP</span>
+                    </button>
+                    <button class="layout-btn" data-layout="cd">
+                        <span class="btn-number">3</span>
+                        <span class="btn-text">CD</span>
+                    </button>
+                    <button class="layout-btn" data-layout="cassette">
+                        <span class="btn-number">4</span>
+                        <span class="btn-text">Cassette</span>
+                    </button>
+                    <button class="layout-btn" data-layout="books">
+                        <span class="btn-number">5</span>
+                        <span class="btn-text">Books</span>
+                    </button>
                 </div>
 
-                <!-- Text Customization -->
+                <h2 style="margin-top: 30px;">Image Upload</h2>
+                
                 <div class="form-group">
-                    <label for="headline">Headline:</label>
-                    <input type="text" id="headline" placeholder="Enter your headline" value="Your Headline Here">
+                    <label for="image-input">Upload Images (JPG/PNG):</label>
+                    <input type="file" id="image-input" accept="image/*" multiple>
+                    <small>Upload 2-3 images. Use filenames with "front", "back", or generic names.</small>
+                </div>
+
+                <div id="uploaded-images" class="uploaded-images"></div>
+
+                <h2 style="margin-top: 30px;">Image Adjustments</h2>
+                
+                <div class="form-group">
+                    <label for="rotation">Image Rotation:</label>
+                    <div class="slider-container">
+                        <input type="range" id="rotation" min="-45" max="45" value="0" class="slider">
+                        <span id="rotation-value">0°</span>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="subheadline">Subheadline:</label>
-                    <input type="text" id="subheadline" placeholder="Enter your subheadline" value="Add a compelling message">
+                    <label for="spacing">Image Spacing:</label>
+                    <div class="slider-container">
+                        <input type="range" id="spacing" min="0" max="100" value="0" class="slider">
+                        <span id="spacing-value">0%</span>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="body-text">Body Text:</label>
-                    <textarea id="body-text" placeholder="Enter body text" rows="4">Describe your product or service here. Make it compelling and clear.</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="cta-button">CTA Button Text:</label>
-                    <input type="text" id="cta-button" placeholder="e.g., Learn More" value="Learn More">
-                </div>
-
-                <!-- Color Customization -->
-                <div class="form-group">
-                    <label for="primary-color">Primary Color:</label>
-                    <input type="color" id="primary-color" value="#0066cc">
-                </div>
-
-                <div class="form-group">
-                    <label for="secondary-color">Secondary Color:</label>
-                    <input type="color" id="secondary-color" value="#ff6600">
-                </div>
-
-                <div class="form-group">
-                    <label for="text-color">Text Color:</label>
-                    <input type="color" id="text-color" value="#333333">
-                </div>
-
-                <!-- Action Buttons -->
                 <div class="button-group">
-                    <button id="preview-btn" class="btn btn-primary">Preview</button>
-                    <button id="download-btn" class="btn btn-success">Download Mockup</button>
-                    <button id="reset-btn" class="btn btn-secondary">Reset</button>
+                    <button id="preview-btn" class="btn btn-dark-green">Preview</button>
+                    <button id="download-btn" class="btn btn-silver">Download JPG</button>
+                    <button id="reset-btn" class="btn btn-gray">Reset</button>
                 </div>
-            </aside>
+            </div>
 
             <!-- Preview Area -->
-            <main class="preview-area">
-                <div id="mockup" class="mockup-container">
-                    <!-- Mockup content will be generated here -->
+            <div class="preview-area">
+                <h2>Preview</h2>
+                <div id="canvas-container" class="canvas-container">
+                    <canvas id="preview-canvas"></canvas>
                 </div>
-            </main>
+                <div id="status-message" class="status-message"></div>
+            </div>
         </div>
     </div>
 
