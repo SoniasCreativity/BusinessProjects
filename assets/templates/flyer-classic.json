@@ -1,0 +1,21 @@
+{
+  "id": "template-004",
+  "name": "Classic Flyer",
+  "type": "flyer",
+  "description": "A classic flyer template for print and digital",
+  "defaultValues": {
+    "headline": "Big Sale Event",
+    "subheadline": "Join us for our annual celebration",
+    "bodyText": "Enjoy exclusive discounts, special performances, and amazing food. Bring your friends and family!",
+    "ctaButton": "Register Today",
+    "primaryColor": "#3498db",
+    "secondaryColor": "#2980b9",
+    "textColor": "#2c3e50"
+  },
+  "dimensions": {
+    "width": 850,
+    "height": 1100,
+    "aspectRatio": "8.5:11"
+  },
+  "createdAt": "2026-09-10"
+}
