@@ -1,0 +1,32 @@
+[
+  {
+    "id": "template-001",
+    "name": "Modern Gradient",
+    "type": "social-media",
+    "file": "social-media-modern.json"
+  },
+  {
+    "id": "template-002",
+    "name": "Professional Email Header",
+    "type": "email-header",
+    "file": "email-header-professional.json"
+  },
+  {
+    "id": "template-003",
+    "name": "Bold Web Banner",
+    "type": "banner",
+    "file": "banner-bold.json"
+  },
+  {
+    "id": "template-004",
+    "name": "Classic Flyer",
+    "type": "flyer",
+    "file": "flyer-classic.json"
+  },
+  {
+    "id": "template-005",
+    "name": "Professional Business Card",
+    "type": "business-card",
+    "file": "business-card-professional.json"
+  }
+]
