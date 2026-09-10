@@ -1,250 +1,433 @@
 // DOM Elements
-const templateSelect = document.getElementById('template');
-const headlineInput = document.getElementById('headline');
-const subheadlineInput = document.getElementById('subheadline');
-const bodyTextInput = document.getElementById('body-text');
-const ctaButtonInput = document.getElementById('cta-button');
-const primaryColorInput = document.getElementById('primary-color');
-const secondaryColorInput = document.getElementById('secondary-color');
-const textColorInput = document.getElementById('text-color');
-const mockupContainer = document.getElementById('mockup');
+const layoutButtons = document.querySelectorAll('.layout-btn');
+const imageInput = document.getElementById('image-input');
+const uploadedImagesContainer = document.getElementById('uploaded-images');
+const rotationSlider = document.getElementById('rotation');
+const rotationValue = document.getElementById('rotation-value');
+const spacingSlider = document.getElementById('spacing');
+const spacingValue = document.getElementById('spacing-value');
 const previewBtn = document.getElementById('preview-btn');
 const downloadBtn = document.getElementById('download-btn');
 const resetBtn = document.getElementById('reset-btn');
+const previewCanvas = document.getElementById('preview-canvas');
+const statusMessage = document.getElementById('status-message');
+
+// State
+let currentLayout = 'vinyl-lp';
+let uploadedImages = {};
 
 // Event Listeners
-templateSelect.addEventListener('change', generateMockup);
-headlineInput.addEventListener('input', generateMockup);
-subheadlineInput.addEventListener('input', generateMockup);
-bodyTextInput.addEventListener('input', generateMockup);
-ctaButtonInput.addEventListener('input', generateMockup);
-primaryColorInput.addEventListener('change', generateMockup);
-secondaryColorInput.addEventListener('change', generateMockup);
-textColorInput.addEventListener('change', generateMockup);
-previewBtn.addEventListener('click', generateMockup);
-downloadBtn.addEventListener('click', downloadMockup);
+layoutButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        layoutButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentLayout = btn.dataset.layout;
+        showMessage('Layout changed to: ' + btn.querySelector('.btn-text').textContent, 'info');
+        generatePreview();
+    });
+});
+
+imageInput.addEventListener('change', handleImageUpload);
+rotationSlider.addEventListener('input', (e) => {
+    rotationValue.textContent = e.target.value + '°';
+    generatePreview();
+});
+spacingSlider.addEventListener('input', (e) => {
+    spacingValue.textContent = e.target.value + '%';
+    generatePreview();
+});
+previewBtn.addEventListener('click', generatePreview);
+downloadBtn.addEventListener('click', downloadComposition);
 resetBtn.addEventListener('click', resetForm);
 
-// Initialize on page load
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    generateMockup();
+    layoutButtons[0].classList.add('active');
 });
 
 /**
- * Generate mockup based on selected template and user inputs
+ * Handle image upload
  */
-function generateMockup() {
-    const template = templateSelect.value;
-    const headline = headlineInput.value;
-    const subheadline = subheadlineInput.value;
-    const bodyText = bodyTextInput.value;
-    const ctaButtonText = ctaButtonInput.value;
-    const primaryColor = primaryColorInput.value;
-    const secondaryColor = secondaryColorInput.value;
-    const textColor = textColorInput.value;
-
-    let mockupHTML = '';
-
-    switch (template) {
-        case 'social-media':
-            mockupHTML = generateSocialMediaMockup(headline, subheadline, bodyText, ctaButtonText, primaryColor, secondaryColor, textColor);
-            break;
-        case 'email-header':
-            mockupHTML = generateEmailHeaderMockup(headline, subheadline, bodyText, ctaButtonText, primaryColor, secondaryColor, textColor);
-            break;
-        case 'banner':
-            mockupHTML = generateBannerMockup(headline, subheadline, bodyText, ctaButtonText, primaryColor, secondaryColor, textColor);
-            break;
-        case 'flyer':
-            mockupHTML = generateFlyerMockup(headline, subheadline, bodyText, ctaButtonText, primaryColor, secondaryColor, textColor);
-            break;
-        case 'business-card':
-            mockupHTML = generateBusinessCardMockup(headline, subheadline, bodyText, ctaButtonText, primaryColor, secondaryColor, textColor);
-            break;
-        default:
-            mockupHTML = generateSocialMediaMockup(headline, subheadline, bodyText, ctaButtonText, primaryColor, secondaryColor, textColor);
-    }
-
-    mockupContainer.innerHTML = mockupHTML;
-}
-
-/**
- * Social Media Post Template
- */
-function generateSocialMediaMockup(headline, subheadline, bodyText, cta, primary, secondary, textColor) {
-    return `
-        <div class="mockup social-media" style="background: linear-gradient(135deg, ${primary} 0%, ${secondary} 100%); color: ${textColor};">
-            <h1 style="color: white;">${headline}</h1>
-            <h2 style="color: rgba(255, 255, 255, 0.9);">${subheadline}</h2>
-            <p style="color: rgba(255, 255, 255, 0.85);">${bodyText}</p>
-            <button class="cta-button" style="background-color: white; color: ${primary};">${cta}</button>
-        </div>
-    `;
-}
-
-/**
- * Email Header Template
- */
-function generateEmailHeaderMockup(headline, subheadline, bodyText, cta, primary, secondary, textColor) {
-    return `
-        <div class="mockup email-header" style="background: linear-gradient(to right, ${primary} 0%, ${secondary} 100%); color: white;">
-            <h1 style="color: white; font-size: 2.2em; margin-bottom: 10px;">${headline}</h1>
-            <h2 style="color: rgba(255, 255, 255, 0.95); font-size: 1.4em; margin-bottom: 15px;">${subheadline}</h2>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 1em; line-height: 1.6; margin-bottom: 20px;">${bodyText}</p>
-            <button class="cta-button" style="background-color: white; color: ${primary}; font-size: 1em;">${cta}</button>
-        </div>
-    `;
-}
-
-/**
- * Web Banner Template
- */
-function generateBannerMockup(headline, subheadline, bodyText, cta, primary, secondary, textColor) {
-    return `
-        <div class="mockup banner" style="background: linear-gradient(90deg, ${primary} 0%, ${secondary} 100%); display: flex; flex-direction: column; justify-content: center;">
-            <h1 style="color: white; font-size: 3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${headline}</h1>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.3em; margin: 15px 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">${subheadline}</p>
-            <button class="cta-button" style="background-color: white; color: ${primary}; width: fit-content; margin-top: 20px;">${cta}</button>
-        </div>
-    `;
-}
-
-/**
- * Flyer Template
- */
-function generateFlyerMockup(headline, subheadline, bodyText, cta, primary, secondary, textColor) {
-    return `
-        <div class="mockup flyer" style="background: white; border-top: 8px solid ${primary}; border-bottom: 8px solid ${secondary};">
-            <div style="padding: 20px;">
-                <h1 style="color: ${primary}; font-size: 2em; margin-bottom: 10px;">${headline}</h1>
-                <h2 style="color: ${secondary}; font-size: 1.4em; margin-bottom: 15px;">${subheadline}</h2>
-                <p style="color: ${textColor}; font-size: 0.95em; line-height: 1.6; margin-bottom: 20px;">${bodyText}</p>
-                <button class="cta-button" style="background-color: ${primary}; color: white;">${cta}</button>
-            </div>
-        </div>
-    `;
-}
-
-/**
- * Business Card Template
- */
-function generateBusinessCardMockup(headline, subheadline, bodyText, cta, primary, secondary, textColor) {
-    return `
-        <div class="mockup business-card" style="background: ${primary}; color: white; display: flex; flex-direction: column; justify-content: space-between; padding: 20px;">
-            <div>
-                <h1 style="color: white; font-size: 1.6em; margin-bottom: 5px;">${headline}</h1>
-                <h2 style="color: ${secondary}; font-size: 0.9em; margin-bottom: 10px;">${subheadline}</h2>
-            </div>
-            <div style="font-size: 0.85em; line-height: 1.5; border-top: 1px solid rgba(255, 255, 255, 0.3); padding-top: 15px;">
-                <p>${bodyText}</p>
-            </div>
-        </div>
-    `;
-}
-
-/**
- * Download mockup as image
- */
-function downloadMockup() {
-    const mockup = document.querySelector('.mockup');
+function handleImageUpload(e) {
+    const files = Array.from(e.target.files);
     
-    if (!mockup) {
-        showMessage('No mockup to download!', 'error');
+    if (files.length === 0) return;
+    
+    files.forEach(file => {
+        if (!file.type.startsWith('image/')) {
+            showMessage('Please upload valid image files', 'error');
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const fileName = file.name.toLowerCase();
+            const img = new Image();
+            img.onload = () => {
+                uploadedImages[fileName] = {
+                    src: event.target.result,
+                    img: img,
+                    name: file.name
+                };
+                displayUploadedImages();
+                generatePreview();
+                showMessage('Image uploaded: ' + file.name, 'success');
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+/**
+ * Display uploaded images
+ */
+function displayUploadedImages() {
+    uploadedImagesContainer.innerHTML = '';
+    
+    Object.entries(uploadedImages).forEach(([key, imageData]) => {
+        const div = document.createElement('div');
+        div.className = 'image-item';
+        div.innerHTML = `
+            <span class="image-item-name">${imageData.name}</span>
+            <button class="image-item-remove" data-filename="${key}">Remove</button>
+        `;
+        uploadedImagesContainer.appendChild(div);
+    });
+    
+    document.querySelectorAll('.image-item-remove').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const filename = e.target.dataset.filename;
+            delete uploadedImages[filename];
+            displayUploadedImages();
+            generatePreview();
+        });
+    });
+}
+
+/**
+ * Classify images by filename
+ */
+function classifyImages() {
+    const classified = {
+        front: null,
+        back: null,
+        generic: null
+    };
+    
+    Object.entries(uploadedImages).forEach(([key, imageData]) => {
+        const nameLower = key.toLowerCase();
+        if (nameLower.includes('front')) {
+            classified.front = imageData.img;
+        } else if (nameLower.includes('back')) {
+            classified.back = imageData.img;
+        } else {
+            classified.generic = imageData.img;
+        }
+    });
+    
+    return classified;
+}
+
+/**
+ * Remove background from image (simplified - returns canvas with image)
+ */
+function removeBackground(img, canvas) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    // In production, use a library like remove.bg API or TensorFlow.js
+    return canvas;
+}
+
+/**
+ * Crop image edges
+ */
+function cropImage(img, canvas) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    // Simplified crop - in production, detect actual content boundaries
+    return canvas;
+}
+
+/**
+ * Generate preview based on layout
+ */
+function generatePreview() {
+    const rotation = parseInt(rotationSlider.value);
+    const spacing = parseInt(spacingSlider.value) / 100;
+    
+    const classified = classifyImages();
+    
+    if (!classified.front && !classified.back && !classified.generic) {
+        showMessage('Please upload images first', 'error');
         return;
     }
-
-    // Dynamically load html2canvas library from CDN
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-    script.onload = () => {
-        html2canvas(mockup, {
-            backgroundColor: '#ffffff',
-            scale: 2,
-            logging: false
-        }).then(canvas => {
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = `marketing-mockup-${Date.now()}.png`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showMessage('Mockup downloaded successfully!', 'success');
-        }).catch(err => {
-            console.error('Error generating image:', err);
-            showMessage('Failed to download mockup. Please try again.', 'error');
-        });
-    };
-    script.onerror = () => {
-        showMessage('Failed to load image library. Please try again.', 'error');
-    };
-    document.head.appendChild(script);
+    
+    // Create canvas with white background
+    const canvas = document.createElement('canvas');
+    const ctx = previewCanvas.getContext('2d');
+    
+    switch (currentLayout) {
+        case 'vinyl-lp':
+            generateVinylLP(previewCanvas, classified, rotation, spacing);
+            break;
+        case 'vinyl-ep':
+            generateVinylEP(previewCanvas, classified, rotation, spacing);
+            break;
+        case 'cd':
+            generateCD(previewCanvas, classified, rotation, spacing);
+            break;
+        case 'cassette':
+            generateCassette(previewCanvas, classified, rotation, spacing);
+            break;
+        case 'books':
+            generateBooks(previewCanvas, classified, rotation, spacing);
+            break;
+    }
+    
+    showMessage('Preview generated', 'success');
 }
 
 /**
- * Reset form to default values
+ * Vinyl LP Layout: Top center (large), bottom left/right with 20% overlap
+ */
+function generateVinylLP(canvas, images, rotation, spacing) {
+    const canvasWidth = 1200;
+    const canvasHeight = 1400;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    
+    const topSize = 600;
+    const bottomSize = 400;
+    const overlap = bottomSize * 0.2;
+    
+    // Top center - front image (slightly larger)
+    if (images.front) {
+        const x = (canvasWidth - topSize) / 2;
+        const y = 50;
+        drawImageRotated(ctx, images.front, x, y, topSize, topSize, rotation);
+    }
+    
+    // Bottom left - back image
+    if (images.back) {
+        const x = 100 - (spacing * 50);
+        const y = canvasHeight - bottomSize - 50 + overlap;
+        drawImageRotated(ctx, images.back, x, y, bottomSize, bottomSize, rotation);
+    }
+    
+    // Bottom right - generic image (behind bottom left)
+    if (images.generic) {
+        const x = canvasWidth - bottomSize - 100 + (spacing * 50);
+        const y = canvasHeight - bottomSize - 50;
+        drawImageRotated(ctx, images.generic, x, y, bottomSize, bottomSize, rotation);
+    }
+}
+
+/**
+ * Vinyl EP Layout: Bottom center (front), top center (generic/back)
+ */
+function generateVinylEP(canvas, images, rotation, spacing) {
+    const canvasWidth = 1000;
+    const canvasHeight = 1200;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    
+    const size = 500;
+    
+    // Top center - generic/back image (in back)
+    if (images.generic || images.back) {
+        const img = images.generic || images.back;
+        const x = (canvasWidth - size) / 2 + (spacing * 30);
+        const y = 50;
+        drawImageRotated(ctx, img, x, y, size, size, rotation);
+    }
+    
+    // Bottom center - front image (on top)
+    if (images.front) {
+        const x = (canvasWidth - size) / 2 - (spacing * 30);
+        const y = canvasHeight - size - 50;
+        drawImageRotated(ctx, images.front, x, y, size, size, rotation);
+    }
+}
+
+/**
+ * CD Layout: Top left/right (pair), bottom center (overlay with 20% overlap)
+ */
+function generateCD(canvas, images, rotation, spacing) {
+    const canvasWidth = 1200;
+    const canvasHeight = 1000;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    
+    const topSize = 400;
+    const bottomSize = 500;
+    const overlap = bottomSize * 0.2;
+    const gap = 60 - (spacing * 40);
+    
+    // Top left - front image
+    if (images.front) {
+        const x = (canvasWidth / 2 - topSize) / 2 - gap / 2;
+        const y = 50;
+        drawImageRotated(ctx, images.front, x, y, topSize, topSize, rotation);
+    }
+    
+    // Top right - back image
+    if (images.back) {
+        const x = canvasWidth / 2 + (canvasWidth / 2 - topSize) / 2 + gap / 2;
+        const y = 50;
+        drawImageRotated(ctx, images.back, x, y, topSize, topSize, rotation);
+    }
+    
+    // Bottom center - generic image (on top, overlapping)
+    if (images.generic) {
+        const x = (canvasWidth - bottomSize) / 2;
+        const y = 50 + topSize - overlap;
+        drawImageRotated(ctx, images.generic, x, y, bottomSize, bottomSize, rotation);
+    }
+}
+
+/**
+ * Cassette Tape Layout: Center left (front), center right (generic with ribbon)
+ */
+function generateCassette(canvas, images, rotation, spacing) {
+    const canvasWidth = 1000;
+    const canvasHeight = 800;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    
+    const size = 400;
+    const gap = 100 + (spacing * 50);
+    
+    // Center left - front image
+    if (images.front) {
+        const x = (canvasWidth / 2 - size) / 2 - gap / 2;
+        const y = (canvasHeight - size) / 2;
+        drawImageRotated(ctx, images.front, x, y, size, size, rotation);
+    }
+    
+    // Center right - generic image
+    if (images.generic) {
+        const x = canvasWidth / 2 + (canvasWidth / 2 - size) / 2 + gap / 2;
+        const y = (canvasHeight - size) / 2;
+        drawImageRotated(ctx, images.generic, x, y, size, size, rotation);
+        
+        // Draw ribbon edge at bottom
+        ctx.fillStyle = '#c0c0c0';
+        ctx.fillRect(x, y + size - 30, size, 30);
+    }
+}
+
+/**
+ * Books Layout: Top left (front), bottom right (back) with front in front
+ */
+function generateBooks(canvas, images, rotation, spacing) {
+    const canvasWidth = 1000;
+    const canvasHeight = 1200;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    
+    const size = 500;
+    const offset = 100 + (spacing * 50);
+    
+    // Bottom right - back image (drawn first, so it's behind)
+    if (images.back) {
+        const x = canvasWidth - size - 50 - offset;
+        const y = canvasHeight - size - 50;
+        drawImageRotated(ctx, images.back, x, y, size, size, rotation);
+    }
+    
+    // Top left - front image (drawn last, so it's in front)
+    if (images.front) {
+        const x = 50 + offset;
+        const y = 50;
+        drawImageRotated(ctx, images.front, x, y, size, size, rotation);
+    }
+}
+
+/**
+ * Draw image with rotation
+ */
+function drawImageRotated(ctx, img, x, y, width, height, rotation) {
+    ctx.save();
+    ctx.translate(x + width / 2, y + height / 2);
+    ctx.rotate((rotation * Math.PI) / 180);
+    ctx.drawImage(img, -width / 2, -height / 2, width, height);
+    ctx.restore();
+}
+
+/**
+ * Download composition as JPG
+ */
+function downloadComposition() {
+    if (previewCanvas.width === 0) {
+        showMessage('Please generate a preview first', 'error');
+        return;
+    }
+    
+    previewCanvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `product-layout-${currentLayout}-${Date.now()}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showMessage('Image downloaded as JPG', 'success');
+    }, 'image/jpeg', 0.95);
+}
+
+/**
+ * Reset form
  */
 function resetForm() {
-    headlineInput.value = 'Your Headline Here';
-    subheadlineInput.value = 'Add a compelling message';
-    bodyTextInput.value = 'Describe your product or service here. Make it compelling and clear.';
-    ctaButtonInput.value = 'Learn More';
-    primaryColorInput.value = '#0066cc';
-    secondaryColorInput.value = '#ff6600';
-    textColorInput.value = '#333333';
-    templateSelect.value = 'social-media';
-    
-    generateMockup();
-    showMessage('Form reset successfully!', 'info');
+    uploadedImages = {};
+    imageInput.value = '';
+    rotationSlider.value = 0;
+    spacingSlider.value = 0;
+    rotationValue.textContent = '0°';
+    spacingValue.textContent = '0%';
+    uploadedImagesContainer.innerHTML = '';
+    previewCanvas.width = 0;
+    previewCanvas.height = 0;
+    showMessage('Form reset', 'info');
 }
 
 /**
- * Show message to user
+ * Show status message
  */
 function showMessage(text, type) {
-    const message = document.createElement('div');
-    message.className = `message ${type}`;
-    message.textContent = text;
+    statusMessage.textContent = text;
+    statusMessage.className = 'status-message ' + type;
     
-    const controlPanel = document.querySelector('.control-panel');
-    controlPanel.insertBefore(message, controlPanel.firstChild);
-    
-    // Remove message after 3 seconds
     setTimeout(() => {
-        message.remove();
-    }, 3000);
+        statusMessage.textContent = '';
+        statusMessage.className = 'status-message';
+    }, 4000);
 }
 
-/**
- * Copy mockup styles and content for sharing
- */
-function getMockupData() {
-    return {
-        template: templateSelect.value,
-        headline: headlineInput.value,
-        subheadline: subheadlineInput.value,
-        bodyText: bodyTextInput.value,
-        ctaButton: ctaButtonInput.value,
-        primaryColor: primaryColorInput.value,
-        secondaryColor: secondaryColorInput.value,
-        textColor: textColorInput.value,
-        timestamp: new Date().toISOString()
-    };
-}
-
-/**
- * Load mockup data from saved state
- */
-function loadMockupData(data) {
-    if (data.template) templateSelect.value = data.template;
-    if (data.headline) headlineInput.value = data.headline;
-    if (data.subheadline) subheadlineInput.value = data.subheadline;
-    if (data.bodyText) bodyTextInput.value = data.bodyText;
-    if (data.ctaButton) ctaButtonInput.value = data.ctaButton;
-    if (data.primaryColor) primaryColorInput.value = data.primaryColor;
-    if (data.secondaryColor) secondaryColorInput.value = data.secondaryColor;
-    if (data.textColor) textColorInput.value = data.textColor;
-    
-    generateMockup();
-}
-
-console.log('Marketing Material Mock-Up Generator initialized successfully!');
+console.log('Product Image Layout Composer initialized successfully!');
