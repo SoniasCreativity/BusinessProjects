@@ -1,0 +1,21 @@
+{
+  "id": "template-002",
+  "name": "Professional Email Header",
+  "type": "email-header",
+  "description": "A professional email header template for campaigns",
+  "defaultValues": {
+    "headline": "Welcome to Our Newsletter",
+    "subheadline": "Discover amazing offers and updates",
+    "bodyText": "Stay updated with the latest news, tips, and exclusive offers delivered to your inbox.",
+    "ctaButton": "Get Started",
+    "primaryColor": "#1a1a2e",
+    "secondaryColor": "#16213e",
+    "textColor": "#ffffff"
+  },
+  "dimensions": {
+    "width": 600,
+    "height": 200,
+    "aspectRatio": "3:1"
+  },
+  "createdAt": "2026-09-10"
+}
